@@ -1,6 +1,12 @@
 # Steps for fastlane build running locally
 ## Install xcode if its not present using below command
 ###### xcode-select --install
+## Create React native app
+##### npx create-react-native-app 
+###### give name as "aswanireactapp" (here in this example)
+## install node modules
+##### npm install expo-updates --save
+##### npm install -g node-modules
 ## install fastlane using homebrew
 ###### brew install fastlane
 ## setup fastlane
@@ -17,6 +23,12 @@
 ###### Edit Gemfile with gem "CocoaPods"
 ###### gem install cocoapods 
 ###### pod init
+###### add below code inside "target 'aswanireactapp' do" section of podfile 
+
+####### use_unimodules!
+####### config = use_native_modules!
+####### use_react_native!(:path => config["reactNativePath"])
+
 ###### bundle exec pod install
 ### set environment variable
 ###### export LC_ALL=en_US.UTF-8
@@ -31,7 +43,7 @@
 ###### bundle exec fastlane ios build
 
 # TravisCI link
-https://travis-ci.com/github/aswanimaria/reactNativeAppBuild
+https://travis-ci.com/github/AswaniJose/reactnative-app-thanx
 
 # Platform
 ios
