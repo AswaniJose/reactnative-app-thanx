@@ -1,0 +1,48 @@
+setup_travis
+
+fastlane_version '2.176.0'
+
+#xcversion(version: "11.2")
+
+#xcode_select "/Applications/Xcode-11.app"
+
+default_platform(:ios)
+
+platform :ios do
+ 
+#desc 'Test the iOS application.'
+#lane :test do
+ #run_tests(
+ # workspace: "./ios/aswanireactapp.xcworkspace",
+  #scheme: "aswanireactapp",
+  #test_without_building: true,
+  #clean: false
+#)
+ 
+#end
+ 
+ 
+ 
+desc 'Build the iOS application.'
+lane :build do
+  
+  #sh "pwd" 
+   #Dir.chdir("..")
+   sh "pwd" 
+  increment_build_number(xcodeproj: './ios/aswanireactapp.xcodeproj')
+
+#  gym(scheme: 'aswanireactapp', project: './ios/aswanireactapp.xcodeproj', configuration: "Debug", skip_codesigning: true)
+gym(
+  #project: "./ios/aswanireactapp.xcodeproj",
+  configuration: "Debug",
+  scheme: "aswanireactapp",
+  skip_codesigning: true,
+  skip_archive: true,
+  output_directory: "./build/output", 
+  output_name: "aswanireactapp.ipa", 
+  workspace: "./ios/aswanireactapp.xcworkspace",
+  clean: true)
+
+end
+
+end
