@@ -1,0 +1,55 @@
+os: osx
+#- stage: Test
+#if: branch = master AND type = push
+#language: node_js
+#node_js: 14.16.0
+#osx_image: xcode12.2
+#script:
+#- bundle exec fastlane ios test
+
+stages:
+- name: Build iOS
+if: branch = master AND type = push
+language: node_js
+node_js: 14.16.0
+osx_image: xcode12.2
+#osx_image: xcode11.2
+#os: osx
+before_install:
+- gem install bundler
+- bundle install
+
+before_script:
+- export NODE_BINARY=node
+- npm install expo-updates --save
+- npm install -g node-modules
+- gem install cocoapods
+- cd ./ios
+#- pod deintegrate
+#- pod init
+- touch Podfile
+- echo "require_relative '../node_modules/react-native/scripts/react_native_pods'" >>Podfile
+- echo "require_relative '../node_modules/react-native-unimodules/cocoapods.rb'" >>Podfile
+- echo "require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'" >>Podfile
+
+- echo "target 'aswanireactapp' do" >>Podfile
+- echo "  use_unimodules!" >>Podfile
+- echo "  config = use_native_modules!" >>Podfile
+
+- echo "  use_react_native!(:path => config[\"reactNativePath\"])" >>Podfile
+- echo "end" >>Podfile
+- cat Podfile
+  
+- bundle exec pod install
+- cd ..
+#- pod init
+#- bundle exec pod update
+
+install:
+
+- bundle install
+script:
+- bundle exec fastlane ios build
+
+
+
